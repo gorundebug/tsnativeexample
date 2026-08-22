@@ -1,0 +1,6 @@
+.git
+.artifacts
+dist
+node_modules
+*.cpuprofile
+*.heapsnapshot

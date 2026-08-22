@@ -1,0 +1,9 @@
+{
+  "name": "@gorundebug/tsnativeexample-analytics-runtime",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@confluentinc/kafka-javascript": "1.9.0"
+  }
+}

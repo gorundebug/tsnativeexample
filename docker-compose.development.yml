@@ -1,0 +1,27 @@
+services:
+  inventoryservice:
+    image: tsnativeexample-development:latest
+    build:
+      target: development
+    command: ["corepack", "pnpm", "exec", "tsx", "src/inventory/main.ts"]
+    volumes:
+      - .:/workspace
+      - /workspace/node_modules
+
+  analyticsservice:
+    image: tsnativeexample-development:latest
+    build:
+      target: development
+    command: ["corepack", "pnpm", "exec", "tsx", "src/analytics/main.ts"]
+    volumes:
+      - .:/workspace
+      - /workspace/node_modules
+
+  orderservice:
+    image: tsnativeexample-development:latest
+    build:
+      target: development
+    command: ["corepack", "pnpm", "exec", "tsx", "src/orders/main.ts"]
+    volumes:
+      - .:/workspace
+      - /workspace/node_modules

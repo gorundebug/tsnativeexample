@@ -1,0 +1,90 @@
+services:
+  inventoryservice:
+    image: tsnativeexample-native-debug:latest
+    build:
+      target: native-debug
+    command:
+      - node
+      - --inspect=0.0.0.0:2345
+      - --abort-on-uncaught-exception
+      - --enable-source-maps
+      - --report-on-fatalerror
+      - --report-on-signal
+      - --report-signal=SIGUSR1
+      - --report-directory=/workspace/.artifacts/node-diagnostics/inventoryservice
+      - --diagnostic-dir=/workspace/.artifacts/node-diagnostics/inventoryservice
+      - --import=./scripts/node-diagnostics.mjs
+      - --import=tsx
+      - src/inventory/main.ts
+    environment:
+      NODE_DIAGNOSTIC_DIR: /workspace/.artifacts/node-diagnostics/inventoryservice
+    ports:
+      - "2345:2345"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ulimits:
+      core:
+        soft: -1
+        hard: -1
+
+  analyticsservice:
+    image: tsnativeexample-native-debug:latest
+    build:
+      target: native-debug
+    command:
+      - node
+      - --inspect=0.0.0.0:2346
+      - --abort-on-uncaught-exception
+      - --enable-source-maps
+      - --report-on-fatalerror
+      - --report-on-signal
+      - --report-signal=SIGUSR1
+      - --report-directory=/workspace/.artifacts/node-diagnostics/analyticsservice
+      - --diagnostic-dir=/workspace/.artifacts/node-diagnostics/analyticsservice
+      - --import=./scripts/node-diagnostics.mjs
+      - --import=tsx
+      - src/analytics/main.ts
+    environment:
+      NODE_DIAGNOSTIC_DIR: /workspace/.artifacts/node-diagnostics/analyticsservice
+    ports:
+      - "2346:2346"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ulimits:
+      core:
+        soft: -1
+        hard: -1
+
+  orderservice:
+    image: tsnativeexample-native-debug:latest
+    build:
+      target: native-debug
+    command:
+      - node
+      - --inspect=0.0.0.0:2347
+      - --abort-on-uncaught-exception
+      - --enable-source-maps
+      - --report-on-fatalerror
+      - --report-on-signal
+      - --report-signal=SIGUSR1
+      - --report-directory=/workspace/.artifacts/node-diagnostics/orderservice
+      - --diagnostic-dir=/workspace/.artifacts/node-diagnostics/orderservice
+      - --import=./scripts/node-diagnostics.mjs
+      - --import=tsx
+      - src/orders/main.ts
+    environment:
+      NODE_DIAGNOSTIC_DIR: /workspace/.artifacts/node-diagnostics/orderservice
+    ports:
+      - "2347:2347"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ulimits:
+      core:
+        soft: -1
+        hard: -1

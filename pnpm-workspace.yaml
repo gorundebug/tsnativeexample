@@ -1,0 +1,10 @@
+packages:
+  - "."
+  - "packages/*"
+
+injectWorkspacePackages: true
+
+allowBuilds:
+  "@confluentinc/kafka-javascript": true
+  esbuild: true
+  protobufjs: false
