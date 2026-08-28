@@ -1,7 +1,9 @@
-# syntax=docker/dockerfile:1.7
-FROM node:24.19.0-bookworm-slim AS development
+ARG DEPENDENCY_DOCKER_REGISTRY=docker.io
+FROM ${DEPENDENCY_DOCKER_REGISTRY}/library/node:24.19.0-bookworm-slim AS development
 ARG TARGETARCH
 ARG NPM_CONFIG_REGISTRY=https://registry.npmjs.org/
+ARG DEPENDENCY_APT_DEBIAN_URL=
+ARG DEPENDENCY_APT_DEBIAN_SECURITY_URL=
 ENV CI=true \
     NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY}
 RUN corepack enable
@@ -16,7 +18,12 @@ COPY . .
 FROM development AS native-debug
 RUN --mount=type=cache,id=servicegen-typescript-native-apt-${TARGETARCH},target=/var/cache/apt,sharing=locked \
     --mount=type=cache,id=servicegen-typescript-native-apt-lists-${TARGETARCH},target=/var/lib/apt/lists,sharing=locked \
-    rm -f /etc/apt/apt.conf.d/docker-clean \
+    if [ -n "${DEPENDENCY_APT_DEBIAN_URL}${DEPENDENCY_APT_DEBIAN_SECURITY_URL}" ]; then \
+      find /etc/apt -type f \( -name '*.list' -o -name '*.sources' \) -exec sed -i \
+        -e "s|http://deb.debian.org/debian-security|${DEPENDENCY_APT_DEBIAN_SECURITY_URL}|g" \
+        -e "s|http://deb.debian.org/debian|${DEPENDENCY_APT_DEBIAN_URL}|g" {} +; \
+    fi \
+    && rm -f /etc/apt/apt.conf.d/docker-clean \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gdb procps
 
@@ -34,7 +41,7 @@ RUN corepack pnpm --filter @gorundebug/tsnativeexample-inventory-runtime \
     && corepack pnpm --filter @gorundebug/tsnativeexample-analytics-runtime \
       deploy --prod /deploy/analyticsservice
 
-FROM node:24.19.0-bookworm-slim AS runtime-base
+FROM ${DEPENDENCY_DOCKER_REGISTRY}/library/node:24.19.0-bookworm-slim AS runtime-base
 ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=builder /workspace/dist/src/common /app/dist/src/common

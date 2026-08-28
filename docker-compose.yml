@@ -31,6 +31,9 @@ services:
       extra_hosts:
         - "host.docker.internal:host-gateway"
       args:
+        DEPENDENCY_DOCKER_REGISTRY: ${DEPENDENCY_DOCKER_REGISTRY:-docker.io}
+        DEPENDENCY_APT_DEBIAN_URL: ${DEPENDENCY_APT_DEBIAN_URL:-}
+        DEPENDENCY_APT_DEBIAN_SECURITY_URL: ${DEPENDENCY_APT_DEBIAN_SECURITY_URL:-}
         NPM_CONFIG_REGISTRY: ${NPM_CONFIG_REGISTRY:-https://registry.npmjs.org/}
     restart: unless-stopped
     environment:
@@ -54,6 +57,9 @@ services:
       extra_hosts:
         - "host.docker.internal:host-gateway"
       args:
+        DEPENDENCY_DOCKER_REGISTRY: ${DEPENDENCY_DOCKER_REGISTRY:-docker.io}
+        DEPENDENCY_APT_DEBIAN_URL: ${DEPENDENCY_APT_DEBIAN_URL:-}
+        DEPENDENCY_APT_DEBIAN_SECURITY_URL: ${DEPENDENCY_APT_DEBIAN_SECURITY_URL:-}
         NPM_CONFIG_REGISTRY: ${NPM_CONFIG_REGISTRY:-https://registry.npmjs.org/}
     restart: unless-stopped
     environment:
@@ -80,6 +86,9 @@ services:
       extra_hosts:
         - "host.docker.internal:host-gateway"
       args:
+        DEPENDENCY_DOCKER_REGISTRY: ${DEPENDENCY_DOCKER_REGISTRY:-docker.io}
+        DEPENDENCY_APT_DEBIAN_URL: ${DEPENDENCY_APT_DEBIAN_URL:-}
+        DEPENDENCY_APT_DEBIAN_SECURITY_URL: ${DEPENDENCY_APT_DEBIAN_SECURITY_URL:-}
         NPM_CONFIG_REGISTRY: ${NPM_CONFIG_REGISTRY:-https://registry.npmjs.org/}
     restart: unless-stopped
     environment:
