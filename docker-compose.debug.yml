@@ -1,6 +1,6 @@
 services:
   inventoryservice:
-    image: tsnativeexample-native-debug:latest
+    image: tsnativeexample-native-debug:local
     build:
       target: native-debug
     command:
@@ -30,7 +30,7 @@ services:
         hard: -1
 
   analyticsservice:
-    image: tsnativeexample-native-debug:latest
+    image: tsnativeexample-native-debug:local
     build:
       target: native-debug
     command:
@@ -60,7 +60,7 @@ services:
         hard: -1
 
   orderservice:
-    image: tsnativeexample-native-debug:latest
+    image: tsnativeexample-native-debug:local
     build:
       target: native-debug
     command:

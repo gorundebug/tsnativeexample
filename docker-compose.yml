@@ -24,7 +24,7 @@ services:
       - app_net
 
   inventoryservice:
-    image: tsnativeexample-inventoryservice:latest
+    image: tsnativeexample-inventoryservice:local
     build:
       context: .
       target: inventoryservice
@@ -50,7 +50,7 @@ services:
       - app_net
 
   analyticsservice:
-    image: tsnativeexample-analyticsservice:latest
+    image: tsnativeexample-analyticsservice:local
     build:
       context: .
       target: analyticsservice
@@ -79,7 +79,7 @@ services:
       - app_net
 
   orderservice:
-    image: tsnativeexample-orderservice:latest
+    image: tsnativeexample-orderservice:local
     build:
       context: .
       target: orderservice

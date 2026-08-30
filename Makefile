@@ -5,10 +5,10 @@ BENCHMARK_ARGS ?=
 PROFILING_ARGS ?=
 
 build:
-	docker build --target builder -t tsnativeexample-builder:latest .
+	docker build --target builder -t tsnativeexample-builder:local .
 
 test:
-	docker build --target check -t tsnativeexample-check:latest .
+	docker build --target check -t tsnativeexample-check:local .
 
 coverage:
 	corepack pnpm test:coverage
