@@ -2,11 +2,19 @@ ARG DEPENDENCY_DOCKER_REGISTRY=docker.io
 FROM ${DEPENDENCY_DOCKER_REGISTRY}/library/node:24.19.0-bookworm-slim AS development
 ARG TARGETARCH
 ARG NPM_CONFIG_REGISTRY=https://registry.npmjs.org/
+ARG DEPENDENCY_GITHUB_RAW_URL=https://github.com
 ARG DEPENDENCY_APT_DEBIAN_URL=
 ARG DEPENDENCY_APT_DEBIAN_SECURITY_URL=
 ENV CI=true \
-    NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY}
-RUN corepack enable
+    NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY} \
+    COREPACK_NPM_REGISTRY=${NPM_CONFIG_REGISTRY} \
+    DEPENDENCY_GITHUB_RAW_URL=${DEPENDENCY_GITHUB_RAW_URL}
+COPY dependency-download-mirrors.generated.env /etc/servicegen/dependency-download-mirrors.generated.env
+COPY dependency-download-mirrors.env /etc/servicegen/dependency-download-mirrors.env
+COPY dependency-download-env.generated.sh /usr/local/bin/dependency-download-env
+SHELL ["/usr/local/bin/dependency-download-env", "/bin/sh", "-c"]
+RUN corepack enable \
+    && corepack pnpm config set registry "${NPM_CONFIG_REGISTRY}"
 WORKDIR /workspace
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages ./packages
