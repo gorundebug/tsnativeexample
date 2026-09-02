@@ -12,7 +12,9 @@ ENV CI=true \
 COPY dependency-download-mirrors.generated.env /etc/servicegen/dependency-download-mirrors.generated.env
 COPY dependency-download-mirrors.env /etc/servicegen/dependency-download-mirrors.env
 COPY dependency-download-env.generated.sh /usr/local/bin/dependency-download-env
+COPY dependency-download-node-preload.generated.cjs /usr/local/lib/dependency-download-node-preload.generated.cjs
 SHELL ["/usr/local/bin/dependency-download-env", "/bin/sh", "-c"]
+ENV NODE_OPTIONS=--require=/usr/local/lib/dependency-download-node-preload.generated.cjs
 RUN corepack enable \
     && corepack pnpm config set registry "${NPM_CONFIG_REGISTRY}"
 WORKDIR /workspace
