@@ -32,11 +32,12 @@ if [ "$retry_command" -eq 0 ] \
   case "${3:-}" in
     *"apt-get update"*) retry_command=1 ;;
     *"pnpm install"*) retry_command=1 ;;
-    *"docker build "*) retry_command=1 ;;
-    *"docker buildx build "*) retry_command=1 ;;
-    *"docker compose "*" build"*) retry_command=1 ;;
   esac
 fi
+
+# A Docker build also runs compilers and tests. Its exit status does not
+# distinguish a download failure from a deterministic source error. Retry
+# downloads at their own boundary, not the complete build transaction.
 
 # Values from the user-owned override file take precedence over the generated
 # catalog. `env` accepts downloader variable names that are not shell identifiers.
