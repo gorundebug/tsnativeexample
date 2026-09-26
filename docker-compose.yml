@@ -24,7 +24,7 @@ services:
       - app_net
 
   inventoryservice:
-    image: tsnativeexample-inventoryservice:local
+    image: tsnativeexample-inventoryservice:${DOCKER_IMAGE_TAG:-local}
     build:
       context: .
       target: inventoryservice
@@ -51,7 +51,7 @@ services:
       - app_net
 
   analyticsservice:
-    image: tsnativeexample-analyticsservice:local
+    image: tsnativeexample-analyticsservice:${DOCKER_IMAGE_TAG:-local}
     build:
       context: .
       target: analyticsservice
@@ -81,7 +81,7 @@ services:
       - app_net
 
   orderservice:
-    image: tsnativeexample-orderservice:local
+    image: tsnativeexample-orderservice:${DOCKER_IMAGE_TAG:-local}
     build:
       context: .
       target: orderservice
