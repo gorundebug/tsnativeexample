@@ -67,6 +67,10 @@ for file in \
         value="${DEPENDENCY_GITHUB_RAW_URL:-https://github.com}${value#"$prefix"}"
         ;;
     esac
+    prefix='${DEPENDENCY_APACHE_ARCHIVE_URL}'
+    case "$value" in
+      "$prefix"*) value="${DEPENDENCY_APACHE_ARCHIVE_URL:-https://archive.apache.org}${value#"$prefix"}" ;;
+    esac
     set -- "$key=$value" "$@"
   done <"$file"
 done
